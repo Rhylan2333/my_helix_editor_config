@@ -1,0 +1,49 @@
+# Language support configuration.
+# See the languages documentation: https://docs.helix-editor.com/master/languages.html
+
+[language-server]
+
+vscode-json-language-server =  { command = "vscode-json-language-server", args = ["--stdio"], config = { provideFormatter = true } }
+
+[[language]]
+name = "rust"
+scope = "source.rust"
+injection-regex = "rust"
+file-types = ["rs"]
+roots = ["Cargo.toml", "Cargo.lock"]
+auto-format = false
+comment-token = "//"
+language-servers = [ "rust-analyzer" ]
+indent = { tab-width = 4, unit = "    " }
+
+# If this doesn't work, you might be on a older release version which handles this differently.
+# Try using [language.config.check] instead of [language-server.rust-analyzer.config.check]
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+
+[language-server.rust-analyzer]
+command = "rust-analyzer"
+
+[[grammar]]
+name = "rust"
+source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "0431a2c60828731f27491ee9fdefe25e250ce9c9" }
+
+[[language]]
+name = "json"
+scope = "source.json"
+injection-regex = "json"
+file-types = ["json", "jsonc", "arb", "ipynb", "geojson", "gltf"]
+roots = []
+language-servers = [ "vscode-json-language-server" ]
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "json"
+source = { git = "https://github.com/tree-sitter/tree-sitter-json", rev = "73076754005a460947cafe8e03a8cf5fa4fa2938" }
+
+# 我把 marksman 放在了“C:\Users\cauca\.local\bin”路径下。下载自:https://github.com/artempyanykh/marksman/releases
+
+# [1] https://github.com/helix-editor/helix/blob/master/languages.toml
+# [2] https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers
+# [3] https://github.com/artempyanykh/marksman
