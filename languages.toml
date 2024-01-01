@@ -42,8 +42,20 @@ indent = { tab-width = 2, unit = "  " }
 name = "json"
 source = { git = "https://github.com/tree-sitter/tree-sitter-json", rev = "73076754005a460947cafe8e03a8cf5fa4fa2938" }
 
-# 我把 marksman 放在了“C:\Users\cauca\.local\bin”路径下。下载自:https://github.com/artempyanykh/marksman/releases
+# 我把 marksman 放在了“/root/marksman/”路径下，并且重命名为了“marksman”。下载自:https://github.com/artempyanykh/marksman/releases
+
+[[language]]
+name = "markdown"
+auto-format = true
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
+
+[[language]]
+name = "toml"
+auto-format = true
+formatter = { command = "dprint", args = ["fmt", "--stdin", "toml"]}
 
 # [1] https://github.com/helix-editor/helix/blob/master/languages.toml
 # [2] https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers
 # [3] https://github.com/artempyanykh/marksman
+# [4] https://zhuanlan.zhihu.com/p/663457964
+# [5] https://typorachina.com/articles/1694984431658.html
