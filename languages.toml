@@ -3,7 +3,13 @@
 
 [language-server]
 
-vscode-json-language-server =  { command = "vscode-json-language-server", args = ["--stdio"], config = { provideFormatter = true } }
+bash-language-server = { command = "bash-language-server", args = ["start"] }
+pylsp = { command = "pylsp" }
+pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
+# pylyzer = { command = "pylyzer", args = ["--server"] }
+
+# 为了使用 rust-analyzer 服务，需要先安装它。
+# 在终端中执行这一命令：`rustup component add rust-analyzer`
 
 [[language]]
 name = "rust"
@@ -12,50 +18,157 @@ injection-regex = "rust"
 file-types = ["rs"]
 roots = ["Cargo.toml", "Cargo.lock"]
 auto-format = false
-comment-token = "//"
+# comment-tokens = "//"
 language-servers = [ "rust-analyzer" ]
 indent = { tab-width = 4, unit = "    " }
+# persistent-diagnostic-sources = ["rustc", "clippy"]
 
 # If this doesn't work, you might be on a older release version which handles this differently.
 # Try using [language.config.check] instead of [language-server.rust-analyzer.config.check]
 [language-server.rust-analyzer.config.check]
-command = "clippy"
+command = ["clippy", "rustc"]
 
 [language-server.rust-analyzer]
 command = "rust-analyzer"
+
+[language-server.rust-analyzer.config]
+inlayHints.bindingModeHints.enable = false
+inlayHints.closingBraceHints.minLines = 10
+inlayHints.closureReturnTypeHints.enable = "with_block"
+inlayHints.discriminantHints.enable = "fieldless"
+inlayHints.lifetimeElisionHints.enable = "skip_trivial"
+inlayHints.typeHints.hideClosureInitialization = false
 
 [[grammar]]
 name = "rust"
 source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "0431a2c60828731f27491ee9fdefe25e250ce9c9" }
 
 [[language]]
-name = "json"
-scope = "source.json"
-injection-regex = "json"
-file-types = ["json", "jsonc", "arb", "ipynb", "geojson", "gltf"]
-roots = []
-language-servers = [ "vscode-json-language-server" ]
-auto-format = true
+name = "bash"
+scope = "source.bash"
+injection-regex = "(shell|bash|zsh|sh)"
+file-types = [
+  "sh",
+  "bash",
+  "zsh",
+  ".bash_login",
+  ".bash_logout",
+  ".bash_profile",
+  ".bashrc",
+  ".profile",
+  ".zshenv",
+  "zshenv",
+  ".zlogin",
+  "zlogin",
+  ".zlogout",
+  "zlogout",
+  ".zprofile",
+  "zprofile",
+  ".zshrc",
+  "zshrc",
+  ".zimrc",
+  "APKBUILD",
+  "PKGBUILD",
+  "eclass",
+  "ebuild",
+  "bazelrc",
+  ".bash_aliases",
+  "Renviron",
+  ".Renviron",
+  ".xprofile",
+  ".xsession",
+  ".xsessionrc",
+  "zsh-theme",
+  "ksh",
+  "cshrc",
+  "tcshrc",
+  ".yashrc",
+  ".yash_profile",
+  ".hushlogin",
+  "bashrc_Apple_Terminal",
+  "zshrc_Apple_Terminal"
+]
+shebangs = ["sh", "bash", "dash", "zsh"]
+# comment-tokens = "#"
+language-servers = [ "bash-language-server" ]
 indent = { tab-width = 2, unit = "  " }
 
 [[grammar]]
-name = "json"
-source = { git = "https://github.com/tree-sitter/tree-sitter-json", rev = "73076754005a460947cafe8e03a8cf5fa4fa2938" }
+name = "bash"
+source = { git = "https://github.com/tree-sitter/tree-sitter-bash", rev = "275effdfc0edce774acf7d481f9ea195c6c403cd" }
+
+[[language]]
+name = "python"
+scope = "source.python"
+injection-regex = "python"
+file-types = ["py","pyi","py3","pyw","ptl",".pythonstartup",".pythonrc","SConstruct", "rpy", "cpy", "ipy", "pyt", "SConscript"]
+shebangs = ["python"]
+roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
+# comment-tokens = "#"
+# language-server = { command = "pyright-langserver", args = ["--stdio"] }
+language-servers = [ "pyright", "pylsp" ]
+# TODO: pyls needs utf-8 offsets
+indent = { tab-width = 4, unit = "    " }
+# For pyright, will get "Async jobs timed out" errors if this empty config is not added
+# config = {}
+
+[[grammar]]
+name = "python"
+source = { git = "https://github.com/tree-sitter/tree-sitter-python", rev = "4bfdd9033a2225cc95032ce77066b7aeca9e2efc" }
 
 # 我把 marksman 放在了“/root/marksman/”路径下，并且重命名为了“marksman”。下载自:https://github.com/artempyanykh/marksman/releases
 
-[[language]]
-name = "markdown"
-auto-format = true
-formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
+# [[language]]
+# name = "markdown"
+# auto-format = true
+# formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
+
+# [[language]]
+# name = "toml"
+# auto-format = true
+# formatter = { command = "dprint", args = ["fmt", "--stdin", "toml"]}
 
 [[language]]
 name = "toml"
-auto-format = true
-formatter = { command = "dprint", args = ["fmt", "--stdin", "toml"]}
+scope = "source.toml"
+injection-regex = "toml"
+file-types = ["toml", "poetry.lock", "Cargo.lock"]
+# comment-tokens = "#"
+language-servers = [ "taplo" ]
+indent = { tab-width = 2, unit = "  " }
 
+[[grammar]]
+name = "toml"
+source = { git = "https://github.com/ikatyang/tree-sitter-toml", rev = "7cff70bbcbbc62001b465603ca1ea88edd668704" }
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+injection-regex = "md|markdown"
+file-types = ["md", "markdown", "PULLREQ_EDITMSG", "mkd", "mdwn", "mdown", "markdn", "mdtxt", "mdtext", "workbook"]
+roots = [".marksman.toml"]
+language-servers = [ "marksman" ]
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "markdown"
+source = { git = "https://github.com/MDeiml/tree-sitter-markdown", rev = "aaf76797aa8ecd9a5e78e0ec3681941de6c945ee", subpath = "tree-sitter-markdown" }
+
+[[language]]
+name = "markdown.inline"
+scope = "source.markdown.inline"
+injection-regex = "markdown\\.inline"
+file-types = []
+grammar = "markdown_inline"
+
+[[grammar]]
+name = "markdown_inline"
+source = { git = "https://github.com/MDeiml/tree-sitter-markdown", rev = "aaf76797aa8ecd9a5e78e0ec3681941de6c945ee", subpath = "tree-sitter-markdown-inline" }
+
+# References
 # [1] https://github.com/helix-editor/helix/blob/master/languages.toml
 # [2] https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers
 # [3] https://github.com/artempyanykh/marksman
 # [4] https://zhuanlan.zhihu.com/p/663457964
 # [5] https://typorachina.com/articles/1694984431658.html
+# [6] https://github.com/helix-editor/helix/blob/master/languages.toml
