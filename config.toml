@@ -1,4 +1,4 @@
-theme = "dracula_at_night"  # "papercolor-dark"
+theme = "zed_onedark"  # "papercolor-dark"
 
 [editor]
 mouse = true
