@@ -246,6 +246,19 @@ screens = [
                     fontsize=16,
                     foreground="#312d2e",
                 ),
+                widget.ThermalSensor(
+                    fontsize=16,
+                    foreground="#312d2e",
+                    foreground_alert="#f71602",
+                    # tag_sensor="",  # 待解决
+                ),
+                # widget.ThermalZone(
+                #     fgcolor_normal="#5a8d48",
+                #     fgcolor_crit="#fc6e02",
+                #     fgcolor_high="#f71602",
+                #     fontsize=16,
+                #     foreground="#312d2e",
+                # ),
                 widget.CPUGraph(
                     border_color="#fcfcfc",
                     fill_color="#f40808",
@@ -272,16 +285,25 @@ screens = [
                     border_color="#fcfcfc",
                     type="box",
                 ),
-                widget.Wlan(),
+                # widget.TextBox(
+                #     "PulseVolume:",
+                #     fontsize=16,
+                #     foreground="#312d2e",
+                # ),
+                # # widget.Bluetooth(
+                # #     foreground="#312d2e",
+                # # ),
+                # widget.PulseVolume(
+                #     fontsize=16,
+                #     volume_app="/usr/bin/kmix",
+                #     foreground="#312d2e",
+                # ),
                 widget.TextBox(
-                    "PulseVolume:",
+                    "Volume:",
                     fontsize=16,
                     foreground="#312d2e",
                 ),
-                # widget.Bluetooth(
-                #     foreground="#312d2e",
-                # ),
-                widget.PulseVolume(
+                widget.Volume(
                     fontsize=16,
                     volume_app="/usr/bin/kmix",
                     foreground="#312d2e",
@@ -289,6 +311,9 @@ screens = [
                 # widget.StatusNotifier(
                 #     background="#312d2e",
                 # ),
+                widget.Wlan(
+                    background="#000000",
+                ),
                 widget.Systray(
                     background="#f8f3ed",
                     icon_size=24,
@@ -296,7 +321,6 @@ screens = [
                 ),
                 widget.Clock(
                     format="%A %Y-%m-%d %H:%M",
-                    fontshadow="#fbf2e3",
                     fontsize=16,
                     foreground="#312d2e",
                 ),
