@@ -196,32 +196,44 @@ screens = [
         wallpaper_mode="fill",
         bottom=bar.Bar(
             [
+                widget.TextBox(
+                    "WindowCount:",
+                    fontsize=16,
+                    foreground="#312d2e",
+                ),
+                widget.WindowCount(
+                    fontsize=16,
+                    foreground="#312d2e",
+                ),
+                widget.TextBox(
+                    "🌦️",
+                    fontsize=24,
+                    foreground="#312d2e",
+                ),
                 widget.CurrentLayout(
                     fontsize=16,
                     foreground="#312d2e",
                 ),
                 widget.GroupBox(
+                    active="#99db05",
                     highlight_method="block",
+                    inactive="#c4c7cc",
+                    foreground="#fcfcfc",
                     fontsize=16,
+                    this_current_screen_border="#95613c",
+                    this_screen_border="#95613c",
                 ),
                 widget.Prompt(
-                    # background="##f40808",
+                    background="#fcfcfc",
                     cursor_color="#312d2e",
-                    fontshadow="#f71602",
                     fontsize=16,
-                    # foreground="##f40808",
-                    visual_bell_color="##f71602",
+                    foreground="#2f0c2c",
+                    visual_bell_color="#f71602",
                 ),
-                widget.TextBox(
-                    "| WindowCount:",
-                    # fontsize=16,
+                widget.WindowName(
                     foreground="#312d2e",
+                    fontsize=14,
                 ),
-                widget.WindowCount(
-                    # fontsize=16,
-                    foreground="#312d2e",
-                ),
-                widget.WindowName(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#f40808", "#fcfcfc"),
@@ -322,9 +334,9 @@ mouse = [
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
-bring_front_click = False
+bring_front_click = True
 floats_kept_above = True
-cursor_warp = False
+cursor_warp = True
 floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
