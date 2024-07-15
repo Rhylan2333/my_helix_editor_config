@@ -47,12 +47,23 @@ import pulsectl_asyncio
 # /home/caicai/.local/pipx/venvs/qtile/bin/python3 -m pip install pyxdg
 # import pyxdg
 
+# https://wiki.debian.org/CpuFrequencyScaling
+# sudo aptitude install cpupower-gui cpufrequtils sysfsutils
+
 
 @hook.subscribe.startup_complete
 def run_every_startup():
-    home = os.path.expanduser("~")
-    subprocess.Popen([home + "/.config/qtile/autostart.sh"])
+    home_dir = os.path.expanduser("~")
+    subprocess.Popen([home_dir + "/.config/qtile/autostart.sh"])
     send_notification("qtile", "Startup complete!")
+
+
+# 当悬浮的窗口获得焦点，自动挪到最前面
+@hook.subscribe.client_focus
+def bringWindowFront(client_window):
+    # 如果是悬浮窗口
+    if client_window.floating:
+        client_window.bring_to_front()
 
 
 mod = "mod4"
@@ -166,8 +177,28 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Max(),
+    layout.Columns(
+        border_focus="#66b700",
+        border_focus_stack="#66b700",
+        border_normal="#565656",
+        border_normal_stack="#565656",
+        border_on_single=True,
+        border_width=5,
+        fair=True,
+        margin=5,
+        margin_on_single=5,
+        single_border_width=2,
+    ),
+    layout.Floating(
+        border_focus="#1490a8",
+        border_normal="#8c9bb8",
+        border_width=2,
+    ),
+    layout.Max(
+        border_focus="#c6813c",
+        border_normal="#d1c384",
+        border_width=1,
+    ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -183,8 +214,8 @@ layouts = [
 
 widget_defaults = dict(
     font="JetBrainsMono Nerd Font Mono",
-    fontsize=12,
-    padding=3,
+    fontsize=24,
+    padding=5,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -196,6 +227,17 @@ screens = [
         wallpaper_mode="fill",
         bottom=bar.Bar(
             [
+                widget.CheckUpdates(
+                    colour_have_updates="#2f0c2c",
+                    colour_no_updates="#312d2e",
+                    # custom_command="apt list --upgradable",
+                    distro="Debian",
+                    update_interval=3600,
+                ),
+                widget.CurrentLayoutIcon(
+                    foreground="#f8f3ed",
+                    background="#c4c7cc",
+                ),
                 widget.TextBox(
                     "WindowCount:",
                     fontsize=16,
@@ -210,33 +252,48 @@ screens = [
                     fontsize=24,
                     foreground="#312d2e",
                 ),
-                widget.CurrentLayout(
-                    fontsize=16,
-                    foreground="#312d2e",
-                ),
                 widget.GroupBox(
                     active="#99db05",
                     highlight_method="block",
                     inactive="#c4c7cc",
-                    foreground="#fcfcfc",
+                    foreground="#f8f3ed",
                     fontsize=16,
                     this_current_screen_border="#95613c",
                     this_screen_border="#95613c",
                 ),
                 widget.Prompt(
-                    background="#fcfcfc",
+                    background="#f8f3ed",
                     cursor_color="#312d2e",
                     fontsize=16,
                     foreground="#2f0c2c",
                     visual_bell_color="#f71602",
                 ),
-                widget.WindowName(
-                    foreground="#312d2e",
-                    fontsize=14,
+                widget.Clipboard(
+                    borderwidth=20,
+                    fontsize=12,
+                    margin=1,
+                    foreground="#3a3539",
+                    scroll=True,
+                    scroll_clear=True,
+                    scroll_delay=1,
+                    scroll_fixed_width=True,
+                    scroll_hide=True,
                 ),
+                widget.TaskList(
+                    background="#f8f3ed",
+                    border="#99db05",
+                    fontsize=12,
+                    foreground="#312d2e",
+                    highlight_method="block",
+                    padding=6,
+                ),
+                # widget.WindowName(
+                #     foreground="#312d2e",
+                #     fontsize=14,
+                # ),
                 widget.Chord(
                     chords_colors={
-                        "launch": ("#f40808", "#fcfcfc"),
+                        "launch": ("#f40808", "#f8f3ed"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
@@ -250,7 +307,8 @@ screens = [
                     fontsize=16,
                     foreground="#312d2e",
                     foreground_alert="#f71602",
-                    # tag_sensor="",  # 待解决
+                    tag_sensor="Tctl",
+                    update_interval=5,
                 ),
                 # widget.ThermalZone(
                 #     fgcolor_normal="#5a8d48",
@@ -260,7 +318,7 @@ screens = [
                 #     foreground="#312d2e",
                 # ),
                 widget.CPUGraph(
-                    border_color="#fcfcfc",
+                    border_color="#f8f3ed",
                     fill_color="#f40808",
                     graph_color="#f7def4",
                     line_width=1,
@@ -271,7 +329,7 @@ screens = [
                     foreground="#312d2e",
                 ),
                 widget.MemoryGraph(
-                    border_color="#fcfcfc",
+                    border_color="#f8f3ed",
                     fill_color="#ceaa14",
                     graph_color="#edd044",
                     line_width=1,
@@ -282,7 +340,7 @@ screens = [
                     foreground="#312d2e",
                 ),
                 widget.NetGraph(
-                    border_color="#fcfcfc",
+                    border_color="#f8f3ed",
                     type="box",
                 ),
                 # widget.TextBox(
@@ -298,26 +356,48 @@ screens = [
                 #     volume_app="/usr/bin/kmix",
                 #     foreground="#312d2e",
                 # ),
-                widget.TextBox(
-                    "Volume:",
-                    fontsize=16,
-                    foreground="#312d2e",
-                ),
-                widget.Volume(
-                    fontsize=16,
-                    volume_app="/usr/bin/kmix",
-                    foreground="#312d2e",
+                # widget.Sep(
+                #     foreground="#312d2e",
+                #     linewidth=2,
+                #     padding=1,
+                #     size_percent=61.8
+                # ),
+                # widget.She(),
+                widget.WidgetBox(
+                    background="#c4c7cc",
+                    close_button_location="right",
+                    fontsize=18,
+                    foreground="#f8f3ed",
+                    text_closed="<|",
+                    text_open="|>",
+                    widgets=[
+                        widget.TextBox(
+                            "Volume:",
+                            fontsize=16,
+                            foreground="#312d2e",
+                        ),
+                        widget.Volume(
+                            fontsize=16,
+                            volume_app="/usr/bin/kmix",
+                            foreground="#312d2e",
+                        ),
+                    ],
                 ),
                 # widget.StatusNotifier(
                 #     background="#312d2e",
                 # ),
-                widget.Wlan(
-                    background="#000000",
-                ),
+                # widget.Wlan(
+                #     background="#000000",
+                # ),
+                # 很有用的功能，待实现
+                # widget.LaunchBar(
+                #     background="#312d2e",
+                # ),
                 widget.Systray(
+                    foreground="#312d2e",
                     background="#f8f3ed",
                     icon_size=24,
-                    padding=8,
+                    padding=5,
                 ),
                 widget.Clock(
                     format="%A %Y-%m-%d %H:%M",
@@ -330,7 +410,7 @@ screens = [
                 ),
             ],
             36,
-            background="#fcfcfc",
+            background="#f8f3ed",
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
