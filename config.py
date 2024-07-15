@@ -213,8 +213,10 @@ layouts = [
 ]
 
 widget_defaults = dict(
+    background="#f8f3ed",
     font="JetBrainsMono Nerd Font Mono",
-    fontsize=24,
+    fontsize=16,
+    foreground="#312d2e",
     padding=5,
 )
 extension_defaults = widget_defaults.copy()
@@ -240,31 +242,25 @@ screens = [
                 ),
                 widget.TextBox(
                     "WindowCount:",
-                    fontsize=16,
-                    foreground="#312d2e",
+                    fontsize=14,
                 ),
                 widget.WindowCount(
-                    fontsize=16,
-                    foreground="#312d2e",
+                    fontsize=14,
                 ),
                 widget.TextBox(
                     "🌦️",
                     fontsize=24,
-                    foreground="#312d2e",
                 ),
                 widget.GroupBox(
                     active="#99db05",
                     highlight_method="block",
                     inactive="#c4c7cc",
                     foreground="#f8f3ed",
-                    fontsize=16,
                     this_current_screen_border="#95613c",
                     this_screen_border="#95613c",
                 ),
                 widget.Prompt(
-                    background="#f8f3ed",
                     cursor_color="#312d2e",
-                    fontsize=16,
                     foreground="#2f0c2c",
                     visual_bell_color="#f71602",
                 ),
@@ -280,15 +276,12 @@ screens = [
                     scroll_hide=True,
                 ),
                 widget.TaskList(
-                    background="#f8f3ed",
                     border="#99db05",
-                    fontsize=12,
-                    foreground="#312d2e",
+                    fontsize=14,
                     highlight_method="block",
-                    padding=6,
+                    padding=5,
                 ),
                 # widget.WindowName(
-                #     foreground="#312d2e",
                 #     fontsize=14,
                 # ),
                 widget.Chord(
@@ -298,66 +291,15 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                widget.TextBox(
-                    "CPU:",
-                    fontsize=16,
-                    foreground="#312d2e",
-                ),
-                widget.ThermalSensor(
-                    fontsize=16,
-                    foreground="#312d2e",
-                    foreground_alert="#f71602",
-                    tag_sensor="Tctl",
-                    update_interval=5,
-                ),
-                # widget.ThermalZone(
-                #     fgcolor_normal="#5a8d48",
-                #     fgcolor_crit="#fc6e02",
-                #     fgcolor_high="#f71602",
-                #     fontsize=16,
-                #     foreground="#312d2e",
-                # ),
-                widget.CPUGraph(
-                    border_color="#f8f3ed",
-                    fill_color="#f40808",
-                    graph_color="#f7def4",
-                    line_width=1,
-                ),
-                widget.TextBox(
-                    "Memory:",
-                    fontsize=16,
-                    foreground="#312d2e",
-                ),
-                widget.MemoryGraph(
-                    border_color="#f8f3ed",
-                    fill_color="#ceaa14",
-                    graph_color="#edd044",
-                    line_width=1,
-                ),
-                widget.TextBox(
-                    "Net:",
-                    fontsize=16,
-                    foreground="#312d2e",
-                ),
-                widget.NetGraph(
-                    border_color="#f8f3ed",
-                    type="box",
-                ),
                 # widget.TextBox(
                 #     "PulseVolume:",
-                #     fontsize=16,
-                #     foreground="#312d2e",
                 # ),
                 # # widget.Bluetooth(
-                # #     foreground="#312d2e",
                 # # ),
                 # widget.PulseVolume(
-                #     fontsize=16,
                 #     volume_app="/usr/bin/kmix",
-                #     foreground="#312d2e",
                 # ),
                 # widget.Sep(
-                #     foreground="#312d2e",
                 #     linewidth=2,
                 #     padding=1,
                 #     size_percent=61.8
@@ -371,38 +313,69 @@ screens = [
                     text_closed="<|",
                     text_open="|>",
                     widgets=[
-                        widget.TextBox(
-                            "Volume:",
-                            fontsize=16,
-                            foreground="#312d2e",
+                        widget.CPU(
+                            update_interval=5,
                         ),
-                        widget.Volume(
-                            fontsize=16,
-                            volume_app="/usr/bin/kmix",
+                        widget.ThermalSensor(
+                            foreground_alert="#f71602",
+                            tag_sensor="Tctl",
+                            update_interval=5,
+                        ),
+                        # widget.ThermalZone(
+                        #     fgcolor_normal="#5a8d48",
+                        #     fgcolor_crit="#fc6e02",
+                        #     fgcolor_high="#f71602",
+                        # ),
+                        widget.CPUGraph(
+                            border_color="#f8f3ed",
+                            fill_color="#f40808",
+                            graph_color="#f7def4",
+                            line_width=1,
+                        ),
+                        widget.TextBox(
+                            "Memory:",
+                        ),
+                        widget.Memory(
                             foreground="#312d2e",
+                            format="{MemPercent:.1f}%",
+                            measure_mem="G",
+                            measure_swap="G",
+                            update_interval=5,
+                        ),
+                        widget.MemoryGraph(
+                            border_color="#f8f3ed",
+                            fill_color="#ceaa14",
+                            graph_color="#edd044",
+                            line_width=1,
+                        ),
+                        widget.TextBox(
+                            "Net:",
+                        ),
+                        widget.Net(
+                            format="↓ {down:.0f}{down_suffix} ↑ {up:.0f}{up_suffix}",
+                        ),
+                        widget.NetGraph(
+                            border_color="#f8f3ed",
+                            type="box",
                         ),
                     ],
                 ),
-                # widget.StatusNotifier(
-                #     background="#312d2e",
-                # ),
-                # widget.Wlan(
-                #     background="#000000",
-                # ),
+                # widget.StatusNotifier(),
+                # widget.Wlan(),
                 # 很有用的功能，待实现
-                # widget.LaunchBar(
-                #     background="#312d2e",
-                # ),
+                # widget.LaunchBar(),
+                widget.TextBox(
+                    "Volume:",
+                ),
+                widget.Volume(
+                    volume_app="/usr/bin/kmix",
+                ),
                 widget.Systray(
-                    foreground="#312d2e",
-                    background="#f8f3ed",
                     icon_size=24,
                     padding=5,
                 ),
                 widget.Clock(
                     format="%A %Y-%m-%d %H:%M",
-                    fontsize=16,
-                    foreground="#312d2e",
                 ),
                 widget.Image(
                     filename="~/图片/我的1x1.jpg",
@@ -411,6 +384,7 @@ screens = [
             ],
             36,
             background="#f8f3ed",
+            foreground="#312d2e",
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
