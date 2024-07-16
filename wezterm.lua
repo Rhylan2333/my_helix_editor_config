@@ -17,7 +17,10 @@ config.color_scheme = 'synthwave-everything'
 config.background = {
   {
     source = { File = '/home/caicai/图片/d5e286_4_makeup_4k.jpg' },
-    opacity = 0.4,
+    horizontal_align = 'Center',
+    hsb = { brightness = 0.05 },
+    opacity = 0.8,
+    vertical_align = 'Middle',
   },
 }
 
