@@ -1,3 +1,4 @@
+#!/usr/bin/env /home/caicai/.local/pipx/venvs/qtile/bin/python3
 # Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
 # Copyright (c) 2012 Randall Ma
@@ -60,7 +61,7 @@ def run_every_startup():
 
 # 当悬浮的窗口获得焦点，自动挪到最前面
 @hook.subscribe.client_focus
-def bringWindowFront(client_window):
+def bring_window_front(client_window):
     # 如果是悬浮窗口
     if client_window.floating:
         client_window.bring_to_front()
@@ -160,14 +161,14 @@ for i in groups:
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                desc=f"Switch to group {i.name}",
             ),
             # mod + shift + group number = switch to & move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
                 lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                desc=f"Switch to & move focused window to group {i.name}",
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod + shift + group number = move focused window to group
@@ -238,7 +239,7 @@ screens = [
                 ),
                 widget.CurrentLayoutIcon(
                     foreground="#f8f3ed",
-                    background="#c4c7cc",
+                    background="#aab2a5",
                 ),
                 widget.TextBox(
                     "WindowCount:",
@@ -254,7 +255,7 @@ screens = [
                 widget.GroupBox(
                     active="#99db05",
                     highlight_method="block",
-                    inactive="#c4c7cc",
+                    inactive="#aab2a5",
                     foreground="#f8f3ed",
                     this_current_screen_border="#95613c",
                     this_screen_border="#95613c",
@@ -279,11 +280,7 @@ screens = [
                     border="#99db05",
                     fontsize=14,
                     highlight_method="block",
-                    padding=5,
                 ),
-                # widget.WindowName(
-                #     fontsize=14,
-                # ),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#f40808", "#f8f3ed"),
@@ -291,22 +288,18 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.TextBox(
-                #     "PulseVolume:",
+                # widget.Bluetooth(
                 # ),
-                # # widget.Bluetooth(
-                # # ),
                 # widget.PulseVolume(
                 #     volume_app="/usr/bin/kmix",
                 # ),
                 # widget.Sep(
                 #     linewidth=2,
-                #     padding=1,
                 #     size_percent=61.8
                 # ),
                 # widget.She(),
                 widget.WidgetBox(
-                    background="#c4c7cc",
+                    background="#aab2a5",
                     close_button_location="right",
                     fontsize=18,
                     foreground="#f8f3ed",
@@ -372,14 +365,12 @@ screens = [
                 ),
                 widget.Systray(
                     icon_size=24,
-                    padding=5,
                 ),
                 widget.Clock(
                     format="%A %Y-%m-%d %H:%M",
                 ),
                 widget.Image(
                     filename="~/图片/我的1x1.jpg",
-                    margin=1,
                 ),
             ],
             36,
