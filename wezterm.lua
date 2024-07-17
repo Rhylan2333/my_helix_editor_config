@@ -16,7 +16,7 @@ config.font = wezterm.font_with_fallback {
 config.color_scheme = 'synthwave-everything'
 config.background = {
   {
-    source = { File = '/home/caicai/图片/d5e286_4_makeup_4k.jpg' },
+    source = { File = '/home/caicai/Pictures/d5e286_4_makeup_4k.jpg' },
     horizontal_align = 'Center',
     hsb = { brightness = 0.05 },
     opacity = 0.8,
