@@ -225,7 +225,7 @@ extension_defaults = widget_defaults.copy()
 screens = [
     Screen(
         wallpaper=os.path.join(
-            os.path.expanduser("~"), "图片/blackmyth_wukong_wallpaper_035.jpg"
+            os.path.expanduser("~"), "Pictures/blackmyth_wukong_wallpaper_035.jpg"
         ),
         wallpaper_mode="fill",
         bottom=bar.Bar(
@@ -370,7 +370,9 @@ screens = [
                     format="%A %Y-%m-%d %H:%M",
                 ),
                 widget.Image(
-                    filename="~/图片/我的1x1.jpg",
+                    filename=os.path.join(
+                        os.path.expanduser("~"), "Pictures/我的1x1.jpg"
+                    ),
                 ),
             ],
             36,
