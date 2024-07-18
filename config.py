@@ -1,4 +1,7 @@
 #!/usr/bin/env /home/caicai/.local/pipx/venvs/qtile/bin/python3
+
+# 记得添加：/usr/share/xsessions/qtile.desktop
+
 # Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
 # Copyright (c) 2012 Randall Ma
@@ -54,8 +57,9 @@ import pulsectl_asyncio
 
 @hook.subscribe.startup_complete
 def run_every_startup():
-    home_dir = os.path.expanduser("~")
-    subprocess.Popen([home_dir + "/.config/qtile/autostart.sh"])
+    subprocess.Popen(
+        os.path.join(os.path.expanduser("~"), ".config/qtile/autostart.sh")
+    )
     send_notification("qtile", "Startup complete!")
 
 
@@ -135,7 +139,13 @@ keys = [
 # Add key bindings to switch VTs in Wayland.
 # We can't check qtile.core.name in default config as it is loaded before qtile is started
 # We therefore defer the check until the key binding is run by using .when(func=...)
-for vt in range(1, 5):
+my_groups = [
+    "1",
+    "2",
+    "3",
+]
+
+for vt in range(1, len(my_groups)):
     keys.append(
         Key(
             ["control", "mod1"],
@@ -145,11 +155,6 @@ for vt in range(1, 5):
         )
     )
 
-my_groups = [
-    "1",
-    "2",
-    "3",
-]
 
 groups = [Group(i) for i in my_groups]
 
@@ -224,11 +229,11 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper=os.path.join(
-            os.path.expanduser("~"), "Pictures/blackmyth_wukong_wallpaper_035.jpg"
-        ),
-        wallpaper_mode="fill",
-        bottom=bar.Bar(
+        # wallpaper=os.path.join(
+        #     os.path.expanduser("~"), "Pictures/blackmyth_wukong_wallpaper_035.jpg"
+        # ),
+        # wallpaper_mode="fill",
+        top=bar.Bar(
             [
                 widget.CheckUpdates(
                     colour_have_updates="#2f0c2c",
@@ -261,8 +266,8 @@ screens = [
                     this_screen_border="#95613c",
                 ),
                 widget.Prompt(
-                    cursor_color="#312d2e",
-                    foreground="#2f0c2c",
+                    cursor_color="#49273b",
+                    foreground="#49273b",
                     visual_bell_color="#f71602",
                 ),
                 widget.Clipboard(
@@ -289,9 +294,6 @@ screens = [
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.Bluetooth(
-                # ),
-                # widget.PulseVolume(
-                #     volume_app="/usr/bin/kmix",
                 # ),
                 # widget.Sep(
                 #     linewidth=2,
@@ -357,17 +359,20 @@ screens = [
                 # widget.Wlan(),
                 # 很有用的功能，待实现
                 # widget.LaunchBar(),
-                widget.TextBox(
-                    "Volume:",
-                ),
-                widget.Volume(
+                widget.PulseVolume(
                     volume_app="/usr/bin/kmix",
+                    emoji=True,
+                    fontsize=20,
                 ),
+                # widget.Volume(
+                #     volume_app="/usr/bin/kmix",
+                #     # emoji=True,
+                # ),
                 widget.Systray(
                     icon_size=24,
                 ),
                 widget.Clock(
-                    format="%A %Y-%m-%d %H:%M",
+                    format="%Y-%m-%d %H:%M %A",
                 ),
                 widget.Image(
                     filename=os.path.join(
@@ -378,8 +383,8 @@ screens = [
             36,
             background="#f8f3ed",
             foreground="#312d2e",
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            border_color=["#685372", "#f8f3ed", "#685372", "#f8f3ed"]  # Borders are magenta
         ),
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
@@ -397,15 +402,22 @@ mouse = [
         start=lazy.window.get_position(),
     ),
     Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+        [mod],
+        "Button3",
+        lazy.window.set_size_floating(),
+        start=lazy.window.get_size(),
     ),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
+    Click(
+        [mod],
+        "Button2",
+        lazy.window.bring_to_front(),
+    ),
 ]
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
-bring_front_click = True
+bring_front_click = False
 floats_kept_above = True
 cursor_warp = True
 floating_layout = layout.Floating(
