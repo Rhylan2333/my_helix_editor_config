@@ -6,6 +6,9 @@ use-grammars = { except = [ "hare", "wren", "gemini" ] }
 [language-server]
 bash-language-server = { command = "bash-language-server", args = ["start"] }
 pylsp = { command = "pylsp" }
+pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
+# cargo install pylyzer
+pylyzer = { command = "pylyzer", args = ["--server"] }
 
 [language-server.rust-analyzer]
 command = "rust-analyzer"
@@ -142,11 +145,10 @@ file-types = ["py", "pyi", "py3", "pyw", "ptl", "rpy", "cpy", "ipy", "pyt", { gl
 shebangs = ["python"]
 roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
 comment-token = "#"
-language-servers = [ "pylsp" ]
+language-servers = [ "pylsp", "pyright" ]
 # TODO: pyls needs utf-8 offsets
 indent = { tab-width = 4, unit = "    " }
 
 [[grammar]]
 name = "python"
 source = { git = "https://github.com/tree-sitter/tree-sitter-python", rev = "4bfdd9033a2225cc95032ce77066b7aeca9e2efc" }
-
