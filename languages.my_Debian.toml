@@ -6,8 +6,9 @@ use-grammars = { except = ["hare", "wren", "gemini"] }
 [language-server]
 bash-language-server = { command = "bash-language-server", args = ["start"] }
 # cargo install --locked dprint
+# https://medium.com/@CaffeineForCode/helix-setup-for-markdown-b29d9891a812
 # dprint init -c ~/.dprint.json
-dprint = { command = "dprint" }
+dprint = { command = "dprint", args = ["lsp"] }
 # https://oxide.md/v0/Guides/Getting+started+with+Markdown+Oxide+Version+0#Helix
 # cargo install --locked --git https://github.com/Feel-ix-343/markdown-oxide.git markdown-oxide
 markdown-oxide = { command = "markdown-oxide" }
@@ -26,7 +27,7 @@ pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 pylyzer = { command = "pylyzer", args = ["--server"] }
 # sudo apt install pkg-config
 # cargo install taplo-cli --locked
-# taplo = { command = "taplo", args = ["lsp", "stdio"] }
+taplo = { command = "taplo", args = ["lsp", "stdio"] }
 
 # 为了使用 rust-analyzer 服务，需要先安装它。
 # 在终端中执行这一命令：`rustup component add rust-analyzer`
@@ -118,7 +119,7 @@ file-types = [
   { glob = "PULLREQ_EDITMSG" },
 ]
 roots = [".marksman.toml"]
-language-servers = ["dprint", "marksman", "markdown-oxide"]
+language-servers = ["marksman", "markdown-oxide", "dprint"]
 # language-servers = ["marksman", "markdown-oxide"]
 indent = { tab-width = 2, unit = "  " }
 block-comment-tokens = { start = "<!--", end = "-->" }
