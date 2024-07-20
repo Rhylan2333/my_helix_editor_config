@@ -1,14 +1,35 @@
 # Language support configuration: https://github.com/helix-editor/helix/blob/master/languages.toml
 # See the languages documentation: https://docs.helix-editor.com/master/languages.html
 
-use-grammars = { except = [ "hare", "wren", "gemini" ] }
+use-grammars = { except = ["hare", "wren", "gemini"] }
 
 [language-server]
 bash-language-server = { command = "bash-language-server", args = ["start"] }
+# cargo install --locked dprint
+# dprint init -c ~/.dprint.json
+dprint = { command = "dprint" }
+# https://oxide.md/v0/Guides/Getting+started+with+Markdown+Oxide+Version+0#Helix
+# cargo install --locked --git https://github.com/Feel-ix-343/markdown-oxide.git markdown-oxide
+markdown-oxide = { command = "markdown-oxide" }
+# https://github.com/artempyanykh/marksman/releases
+# sudo mv marksman-linux-x64 /usr/local/bin/marksman
+marksman = { command = "marksman", args = ["server"] }
+# sudo apt install python3-pylsp
+# sudo apt install python3-pylsp-black
+# sudo apt install python3-pylsp-mypy
+# sudo apt install python3-pylsp-isort
 pylsp = { command = "pylsp" }
+# npm install -g pyright
+# psudo apt install python3-mypy
 pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 # cargo install pylyzer
 pylyzer = { command = "pylyzer", args = ["--server"] }
+# sudo apt install pkg-config
+# cargo install taplo-cli --locked
+# taplo = { command = "taplo", args = ["lsp", "stdio"] }
+
+# 为了使用 rust-analyzer 服务，需要先安装它。
+# 在终端中执行这一命令：`rustup component add rust-analyzer`
 
 [language-server.rust-analyzer]
 command = "rust-analyzer"
@@ -72,12 +93,51 @@ file-types = [
 ]
 shebangs = ["sh", "bash", "dash", "zsh"]
 comment-token = "#"
-language-servers = [ "bash-language-server" ]
+language-servers = ["bash-language-server"]
 indent = { tab-width = 2, unit = "  " }
 
 [[grammar]]
 name = "bash"
 source = { git = "https://github.com/tree-sitter/tree-sitter-bash", rev = "f8fb3274f72a30896075585b32b0c54cad65c086" }
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+injection-regex = "md|markdown"
+file-types = [
+  "md",
+  "markdown",
+  "mkd",
+  "mkdn",
+  "mdwn",
+  "mdown",
+  "markdn",
+  "mdtxt",
+  "mdtext",
+  "workbook",
+  { glob = "PULLREQ_EDITMSG" },
+]
+roots = [".marksman.toml"]
+language-servers = ["dprint", "marksman", "markdown-oxide"]
+# language-servers = ["marksman", "markdown-oxide"]
+indent = { tab-width = 2, unit = "  " }
+block-comment-tokens = { start = "<!--", end = "-->" }
+
+[[grammar]]
+name = "markdown"
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
+source = { git = "https://github.com/tree-sitter-grammars/tree-sitter-markdown", rev = "62516e8c78380e3b51d5b55727995d2c511436d8", subpath = "tree-sitter-markdown" }
+
+[[language]]
+name = "markdown.inline"
+scope = "source.markdown.inline"
+injection-regex = "markdown\\.inline"
+file-types = []
+grammar = "markdown_inline"
+
+[[grammar]]
+name = "markdown_inline"
+source = { git = "https://github.com/tree-sitter-grammars/tree-sitter-markdown", rev = "62516e8c78380e3b51d5b55727995d2c511436d8", subpath = "tree-sitter-markdown-inline" }
 
 [[language]]
 name = "rust"
@@ -93,7 +153,7 @@ block-comment-tokens = [
   { start = "/**", end = "*/" },
   { start = "/*!", end = "*/" },
 ]
-language-servers = [ "rust-analyzer" ]
+language-servers = ["rust-analyzer"]
 indent = { tab-width = 4, unit = "    " }
 persistent-diagnostic-sources = ["rustc", "clippy"]
 
@@ -112,26 +172,35 @@ command = "lldb-dap"
 [[language.debugger.templates]]
 name = "binary"
 request = "launch"
-completion = [ { name = "binary", completion = "filename" } ]
+completion = [{ name = "binary", completion = "filename" }]
 args = { program = "{0}" }
 
 [[language.debugger.templates]]
 name = "binary (terminal)"
 request = "launch"
-completion = [ { name = "binary", completion = "filename" } ]
+completion = [{ name = "binary", completion = "filename" }]
 args = { program = "{0}", runInTerminal = true }
 
 [[language.debugger.templates]]
 name = "attach"
 request = "attach"
-completion = [ "pid" ]
+completion = ["pid"]
 args = { pid = "{0}" }
 
 [[language.debugger.templates]]
 name = "gdbserver attach"
 request = "attach"
-completion = [ { name = "lldb connect url", default = "connect://localhost:3333" }, { name = "file", completion = "filename" }, "pid" ]
-args = { attachCommands = [ "platform select remote-gdb-server", "platform connect {0}", "file {1}", "attach {2}" ] }
+completion = [
+  { name = "lldb connect url", default = "connect://localhost:3333" },
+  { name = "file", completion = "filename" },
+  "pid",
+]
+args = { attachCommands = [
+  "platform select remote-gdb-server",
+  "platform connect {0}",
+  "file {1}",
+  "attach {2}",
+] }
 
 [[grammar]]
 name = "rust"
@@ -141,14 +210,58 @@ source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "9c84a
 name = "python"
 scope = "source.python"
 injection-regex = "py(thon)?"
-file-types = ["py", "pyi", "py3", "pyw", "ptl", "rpy", "cpy", "ipy", "pyt", { glob = ".python_history" }, { glob = ".pythonstartup" }, { glob = ".pythonrc" }, { glob = "SConstruct" }, { glob = "SConscript" }]
+file-types = [
+  "py",
+  "pyi",
+  "py3",
+  "pyw",
+  "ptl",
+  "rpy",
+  "cpy",
+  "ipy",
+  "pyt",
+  { glob = ".python_history" },
+  { glob = ".pythonstartup" },
+  { glob = ".pythonrc" },
+  { glob = "SConstruct" },
+  { glob = "SConscript" },
+]
 shebangs = ["python"]
 roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
 comment-token = "#"
-language-servers = [ "pylsp", "pyright" ]
+language-servers = ["pyright", "pylsp"]
+# language-servers = ["pylsp", "pyright"]
 # TODO: pyls needs utf-8 offsets
 indent = { tab-width = 4, unit = "    " }
 
 [[grammar]]
 name = "python"
 source = { git = "https://github.com/tree-sitter/tree-sitter-python", rev = "4bfdd9033a2225cc95032ce77066b7aeca9e2efc" }
+
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["fmt", "-"] }
+scope = "source.toml"
+injection-regex = "toml"
+file-types = [
+  "toml",
+  { glob = "pdm.lock" },
+  { glob = "poetry.lock" },
+  { glob = "Cargo.lock" },
+  { glob = "uv.lock" },
+]
+comment-token = "#"
+language-servers = ["taplo"]
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "toml"
+source = { git = "https://github.com/ikatyang/tree-sitter-toml", rev = "7cff70bbcbbc62001b465603ca1ea88edd668704" }
+
+# References
+# [1] https://github.com/helix-editor/helix/blob/master/languages.toml
+# [2] https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers
+# [3] https://github.com/artempyanykh/marksman
+# [4] https://zhuanlan.zhihu.com/p/663457964
+# [5] https://typorachina.com/articles/1694984431658.html
+# [6] https://github.com/helix-editor/helix/blob/master/languages.toml
