@@ -5,6 +5,10 @@ use-grammars = { except = ["hare", "wren", "gemini"] }
 
 [language-server]
 bash-language-server = { command = "bash-language-server", args = ["start"] }
+# cargo install --locked dprint
+# https://medium.com/@CaffeineForCode/helix-setup-for-markdown-b29d9891a812
+# dprint init -c ~/.dprint.json
+dprint = { command = "dprint", args = ["lsp"] }
 # https://oxide.md/v0/Guides/Getting+started+with+Markdown+Oxide+Version+0#Helix
 # cargo install --locked --git https://github.com/Feel-ix-343/markdown-oxide.git markdown-oxide
 markdown-oxide = { command = "markdown-oxide" }
@@ -13,18 +17,17 @@ markdown-oxide = { command = "markdown-oxide" }
 marksman = { command = "marksman", args = ["server"] }
 # sudo apt install python3-pylsp
 # sudo apt install python3-pylsp-black
+# sudo apt install python3-pylsp-mypy
 # sudo apt install python3-pylsp-isort
 pylsp = { command = "pylsp" }
+# npm install -g pyright
+# psudo apt install python3-mypy
 pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 # cargo install pylyzer
 pylyzer = { command = "pylyzer", args = ["--server"] }
 # sudo apt install pkg-config
 # cargo install taplo-cli --locked
-# taplo = { command = "taplo", args = ["lsp", "stdio"] }
-# cargo install --locked dprint
-# mkdir -p ~/.config/dprint
-# z ~/.config/dprint
-# dprint init
+taplo = { command = "taplo", args = ["lsp", "stdio"] }
 
 # 为了使用 rust-analyzer 服务，需要先安装它。
 # 在终端中执行这一命令：`rustup component add rust-analyzer`
@@ -116,14 +119,14 @@ file-types = [
   { glob = "PULLREQ_EDITMSG" },
 ]
 roots = [".marksman.toml"]
-# language-servers = ["dprint", "marksman", "markdown-oxide"]
-language-servers = ["marksman", "markdown-oxide"]
+language-servers = ["marksman", "markdown-oxide", "dprint"]
+# language-servers = ["marksman", "markdown-oxide"]
 indent = { tab-width = 2, unit = "  " }
 block-comment-tokens = { start = "<!--", end = "-->" }
 
 [[grammar]]
 name = "markdown"
-# formatter = { command = "dprint", args = ["fmt", "--config $HOME/.config/dprint/dprint.json", "--stdin", "md"] }
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
 source = { git = "https://github.com/tree-sitter-grammars/tree-sitter-markdown", rev = "62516e8c78380e3b51d5b55727995d2c511436d8", subpath = "tree-sitter-markdown" }
 
 [[language]]
@@ -193,7 +196,12 @@ completion = [
   { name = "file", completion = "filename" },
   "pid",
 ]
-args = { attachCommands = ["platform select remote-gdb-server", "platform connect {0}", "file {1}", "attach {2}"] }
+args = { attachCommands = [
+  "platform select remote-gdb-server",
+  "platform connect {0}",
+  "file {1}",
+  "attach {2}",
+] }
 
 [[grammar]]
 name = "rust"
@@ -222,7 +230,8 @@ file-types = [
 shebangs = ["python"]
 roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
 comment-token = "#"
-language-servers = ["pylsp", "pyright"]
+language-servers = ["pyright", "pylsp"]
+# language-servers = ["pylsp", "pyright"]
 # TODO: pyls needs utf-8 offsets
 indent = { tab-width = 4, unit = "    " }
 
