@@ -1,4 +1,4 @@
-theme = "zed_onedark"  # "papercolor-dark"
+theme = "doom_acario_dark" # "zed_onedark" "papercolor-dark"
 
 [editor]
 mouse = true
@@ -12,8 +12,15 @@ bufferline = "multiple"
 [editor.statusline]
 left = ["mode", "spinner"]
 center = ["file-name"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
-separator = "│"
+right = [
+  "diagnostics",
+  "selections",
+  "position",
+  "file-encoding",
+  "file-line-ending",
+  "file-type",
+]
+separator = "⸽"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
@@ -26,24 +33,19 @@ insert = "bar"
 normal = "block"
 select = "underline"
 
-# [editor.whitespace]
-# render = "all"
-# or control each character
-[editor.whitespace.render]
-space = "all"
-tab = "all"
-newline = "all"  # "none"
+[editor.whitespace]
+render = "all"
 
 [editor.whitespace.characters]
-space = "·"
-nbsp = "⍽"
-tab = "→"
+nbsp = "␣"
 newline = "⏎"
-tabpad = "·"  # Tabs will look like "→···" (depending on tab width)
+space = "·"
+tab = "⇥"
+tabpad = "-"  # Tabs will look like "→···" (depending on tab width)
 
 [editor.indent-guides]
 render = true
-character = "╎"  # Some characters that work well: "▏", "┆", "┊", "⸽"
+character = "║" # Some characters that work well: "▏", "╎", "┆", "┊", "⸽"
 skip-levels = 1
 
 [editor.soft-wrap]
