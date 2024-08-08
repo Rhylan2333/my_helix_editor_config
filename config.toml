@@ -1,4 +1,5 @@
-theme = "doom_acario_dark" # "zed_onedark" "papercolor-dark"
+# theme = "doom_acario_dark" # "papercolor-dark"
+theme = "papercolor-dark"
 
 [editor]
 mouse = true
