@@ -15,16 +15,21 @@ markdown-oxide = { command = "markdown-oxide" }
 # https://github.com/artempyanykh/marksman/releases
 # sudo mv marksman-linux-x64 /usr/local/bin/marksman
 marksman = { command = "marksman", args = ["server"] }
-# sudo apt install python3-pylsp
-# sudo apt install python3-pylsp-black
-# sudo apt install python3-pylsp-mypy
-# sudo apt install python3-pylsp-isort
+# pipx install 'python-lsp-server[all]'
+# # sudo apt install python3-pylsp
+# pipx install mypy
+# # sudo apt install python3-pylsp-mypy
+# pipx install isort
+# # sudo apt install python3-pylsp-isort
 pylsp = { command = "pylsp" }
-# npm install -g pyright
-# psudo apt install python3-mypy
-pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
-# cargo install pylyzer
+# cargo install pylyzer --locked
 pylyzer = { command = "pylyzer", args = ["--server"] }
+# npm install -g pyright
+# sudo apt install python3-mypy
+pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
+# pipx install ruff
+# pipx install ruff-lsp
+ruff-lsp = { command = "ruff-lsp" }
 # sudo apt install pkg-config
 # cargo install taplo-cli --locked
 taplo = { command = "taplo", args = ["lsp", "stdio"] }
@@ -119,14 +124,13 @@ file-types = [
   { glob = "PULLREQ_EDITMSG" },
 ]
 roots = [".marksman.toml"]
-language-servers = ["marksman", "markdown-oxide", "dprint"]
-# language-servers = ["marksman", "markdown-oxide"]
+language-servers = ["dprint", "marksman", "markdown-oxide"]
 indent = { tab-width = 2, unit = "  " }
 block-comment-tokens = { start = "<!--", end = "-->" }
+formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
 
 [[grammar]]
 name = "markdown"
-formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
 source = { git = "https://github.com/tree-sitter-grammars/tree-sitter-markdown", rev = "62516e8c78380e3b51d5b55727995d2c511436d8", subpath = "tree-sitter-markdown" }
 
 [[language]]
@@ -230,10 +234,15 @@ file-types = [
 shebangs = ["python"]
 roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
 comment-token = "#"
-language-servers = ["pyright", "pylsp"]
-# language-servers = ["pylsp", "pyright"]
+# language-servers = ["pylyzer", "pyright", "pylsp", "ruff-lsp"]
+# language-servers = ["pyright", "pylsp", "ruff-lsp"]
+language-servers = ["pylsp", "pyright"]
+# language-servers = ["pylsp"]
 # TODO: pyls needs utf-8 offsets
 indent = { tab-width = 4, unit = "    " }
+formatter = { command = "zsh", args = ["-c", """
+  ruff format --line-length=80 --stdin-filename='python' | isort -d -
+  """] }
 
 [[grammar]]
 name = "python"
