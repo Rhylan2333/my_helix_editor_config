@@ -1,0 +1,10 @@
+[manager]
+ratio = [ 1, 2, 4 ]
+linemode = "size"
+show_hidden = true
+show_symlink = true
+
+[opener]
+edit = [
+  { run = 'zellij edit "$1"', block = true, desc = "Open File in a new pane", for = "unix" },
+]
