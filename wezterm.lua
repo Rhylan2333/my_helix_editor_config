@@ -104,6 +104,8 @@ config.colors = {
 config.color_scheme = 'hardhacker'
 config.color_scheme_dirs = { '$HOME/.config/wezterm/colors' }
 config.default_prog = { '/usr/bin/fish' }
+-- config.default_prog = { '/usr/bin/fish', '-c', "zellij -l welcome --config-dir ~/.config/yazelix/zellij options --layout-dir ~/.config/yazelix/zellij/layouts" }
+
 
 config.enable_scroll_bar = true
 
@@ -171,6 +173,9 @@ config.font = wezterm.font_with_fallback {
 -- )
 
 config.hide_tab_bar_if_only_one_tab = true
+
+config.window_decorations = "NONE"
+
 config.text_background_opacity = 0.8
 
 return config
