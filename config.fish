@@ -1,6 +1,11 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin/kent_tools:/usr/local/bin/kent_tools/blat:$PATH"
 
-export BAT_THEME="ansi"
+# Bat v0.25.0:
+# Automatically choose theme based on the terminal's color scheme, see #2896 (@bash)
+# Make shell completions available via --completion <shell>, see issue #2057 and PR #3126 (@einfachIrgendwer0815)
+# export BAT_THEME="ansi"
+# $ bat --completion fish > ~/.config/fish/completions/bat.fish
+# $ chmod +x ~/.config/fish/completions/bat.fish
 
 # RepeatMasker
 # export PERL5LIB="/home/caicai/miniforge3/envs/TE-Annotation/share/RepeatMasker:$PERL5LIB"
@@ -13,10 +18,12 @@ if status is-interactive
     eval "$(zellij setup --generate-auto-start fish | string collect)"
 end
 
+# pnpm
 set -gx PNPM_HOME "/home/caicai/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
+# pnpm end
 
 alias cr="clear"
 alias e="eza"
@@ -31,6 +38,7 @@ alias bst="bat -S -l tsv"
 alias bs="bat -S"
 alias yz="yazi"
 
+# starship 需要新版的 fish
 starship init fish | source
 zoxide init fish | source
 # thefuck --alias | source
@@ -51,10 +59,3 @@ if test -f "/home/caicai/miniforge3/etc/fish/conf.d/mamba.fish"
     source "/home/caicai/miniforge3/etc/fish/conf.d/mamba.fish"
 end
 # <<< conda initialize <<<
-
-# pnpm
-set -gx PNPM_HOME "/home/caicai/.local/share/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
