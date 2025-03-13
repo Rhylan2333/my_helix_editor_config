@@ -6,23 +6,13 @@ config.background = {
   {
     source = { File = '/home/caicai/Pictures/d5e286_4_makeup_4k.jpg' },
     horizontal_align = 'Center',
-    hsb = { brightness = 0.2 },
+    hsb = { brightness = 0.1 },
     opacity = 1,
     vertical_align = 'Middle',
   },
 }
 
 config.colors = {
-  ansi = { '#282433', '#e965a5', '#b1f2a7', '#ebde76', '#b1baf4', '#e192ef', '#b3f4f3', '#eee9fc' },
-  brights = { 'rgba(209, 194, 211, 0.5)', '#e965a5', '#b1f2a7', '#ebde76', '#b1baf4', '#e192ef', '#b3f4f3', '#eee9fc' },
-  compose_cursor = '#ebde76',
-  cursor_bg = 'rgba(27,167,132,0.5)',
-  cursor_border = '#1ba784',
-  cursor_fg = 'rgba(209,194,211,0.5)',
-  scrollbar_thumb = '#d1c2d3',
-  selection_bg = 'rgba(209,194,211,0.5)',
-  selection_fg = 'None',
-  split = '#1ba784',
   tab_bar = {
     -- The color of the strip that goes along the top of the window
     -- (does not apply when fancy tab bar is in use)
@@ -99,9 +89,11 @@ config.colors = {
 }
 
 -- config.color_scheme = 'Cupcake (base16)'
+-- config.color_scheme = 'cyberpunk'
+-- config.color_scheme = 'PhD (base16)'
 -- config.color_scheme = 'synthwave-everything'
 -- config.color_scheme = 'Bamboo Multiplex'
-config.color_scheme = 'hardhacker'
+config.color_scheme = 'CutiePro'
 config.color_scheme_dirs = { '$HOME/.config/wezterm/colors' }
 config.default_prog = { '/usr/bin/fish' }
 -- config.default_prog = { '/usr/bin/fish', '-c', "zellij -l welcome --config-dir ~/.config/yazelix/zellij options --layout-dir ~/.config/yazelix/zellij/layouts" }
@@ -174,7 +166,7 @@ config.font = wezterm.font_with_fallback {
 
 config.hide_tab_bar_if_only_one_tab = true
 
-config.window_decorations = "NONE"
+config.window_decorations = "RESIZE"
 
 config.text_background_opacity = 0.8
 
