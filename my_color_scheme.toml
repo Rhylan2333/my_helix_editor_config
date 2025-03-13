@@ -1,0 +1,91 @@
+[colors]
+# 调整后的ANSI颜色序列（增强对比度和可读性）
+ansi = [
+  "#1a1726",  # 更深的紫色作为黑色，提升对比度
+  "#ff6b9f",  # 调整红色为更柔和的珊瑚粉
+  "#9de3a0",  # 偏冷色调的薄荷绿，更护眼
+  "#ffe863",  # 更明亮的琥珀黄，保持温暖感
+  "#a2b5ff",  # 柔和的淡靛蓝色
+  "#d68cff",  # 浅紫色替代原紫色，增强层次
+  "#8df5f5",  # 明亮的冰蓝色作为青色
+  "#f0ebff"   # 偏冷白的淡紫色作为前景
+]
+
+# 增强版bright颜色（提高亮度和饱和度）
+brights = [
+  "#393351",  # 亮紫灰色作为亮黑
+  "#ff85b3",  # 亮粉红色
+  "#b3ffb3",  # 荧光绿
+  "#fff28c",  # 亮柠檬黄
+  "#b8c8ff",  # 天蓝色
+  "#e9a8ff",  # 浅紫罗兰色
+  "#a3ffff",  # 亮青色
+  "#ffffff"   # 纯白增强对比
+]
+
+# 基础颜色调整
+background = "#282433"    # 保持原有深邃紫色背景
+foreground = "#f0ebff"    # 微调前景为更冷色调
+
+# 光标系统颜色优化
+compose_cursor = '#ffe863'  # 保持琥珀黄但更明亮
+cursor_bg = "#ff6b9f"      # 改为粉红色增加可见性
+cursor_border = "#1ba784"  # 与背景色形成对比
+cursor_fg = "#1a1726"      # 深紫色文字保证可读性
+
+# 选择区域优化
+selection_bg = "#d68cff"   # 改用浅紫色更协调
+selection_fg = "#f0ebff"   # 保持前景色
+
+# 界面元素调整
+scrollbar_thumb = '#d1c2d3'  # 更明亮的薰衣草紫分屏线
+split = '#1ba784'          # 增加存在感
+
+[colors.indexed]
+
+[colors.tab_bar]
+background = "#282433"
+
+[colors.tab_bar.active_tab]
+bg_color = "#282433"
+fg_color = "#e965a5"
+intensity = "Normal"
+underline = "None"
+italic = false
+strikethrough = false
+
+[colors.tab_bar.inactive_tab]
+bg_color = "#282433"
+fg_color = "#938aad"
+intensity = "Normal"
+italic = false
+strikethrough = false
+underline = "None"
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = "#e192ef"
+fg_color = "#eee9fc"
+intensity = "Normal"
+italic = false
+strikethrough = false
+underline = "None"
+
+[colors.tab_bar.new_tab]
+bg_color = "#282433"
+fg_color = "#938aad"
+intensity = "Normal"
+italic = false
+strikethrough = false
+underline = "None"
+
+[colors.tab_bar.new_tab_hover]
+bg_color = "#e192ef"
+fg_color = "#eee9fc"
+intensity = "Normal"
+italic = true
+strikethrough = false
+underline = "None"
+
+[metadata]
+author = 'Yuhao Cai (https://github.com/Rhylan2333)'
+name = 'my_color_scheme'
