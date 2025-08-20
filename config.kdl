@@ -200,6 +200,11 @@ keybinds {
     }
 }
 
+// 结合~/.bashrc使用
+bash_history_fzf {
+    bind "Alt r" { RunCommand "bash_history_fzf"; }
+}
+
 // Plugin aliases - can be used to change the implementation of Zellij
 // changing these requires a restart to take effect
 plugins {
