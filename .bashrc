@@ -5,8 +5,11 @@
 # 自定义 fzf 历史搜索函数
 bash_history_fzf() {
   local selected
-  selected=$(history | awk '{$1=""; gsub(/^ +/, ""); print}' | \
-    fzf --reverse --height 60% --prompt '🔍 历史命令 👇' --preview 'echo {}' --preview-window 'up,20%' )
+  selected=$(
+    history | awk '{$1=""; gsub(/^ +/, ""); print}' | \
+      fzf  --reverse --height 60% --preview-window 'up,20%' \
+      --preview "echo {} | bat -p -l bash --theme 'Monokai Extended Origin' --color always"
+      )
   # 如果选中了命令，则执行
   if [[ -n "$selected" ]]; then
     # echo "🏃 执行 👉 $selected"
@@ -102,7 +105,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 #alias ll='ls -l'
@@ -123,6 +126,11 @@ alias et='eza -hT'
 alias elt='eza -hlT'
 alias bst='bat -S -l tsv'
 alias bs='bat -S'
+
+export BAT_THEME="Monokai Extended Origin"
+
+# 历史记录忽略重复的命令
+export HISTCONTROL=ignoreboth:erasedups
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
