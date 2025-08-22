@@ -26,5 +26,6 @@ mangohud VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json PROTON_ENABLE_
 ## PROTON_NO_ESYNC=1
 
 ```
+![MangoHud](figures/fig_1.png)
 
-[fig_1](figures/fig_1.png)
+![lsfg-vk](figures/fig_2.png)
