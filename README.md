@@ -12,7 +12,7 @@
 
 ---
 
-## 我在使用 Delian
+## 我在使用 [Debian](https://www.debian.org/)
 
 ### 游戏
 
