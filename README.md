@@ -27,6 +27,7 @@ mangohud VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json PROTON_ENABLE_
 
 ```
 ![MangoHud](figures/fig_1.png)
+![b1 setting](figures/fig_1b.png)
 
 #### [lsfg-vk](https://github.com/PancakeTAS/lsfg-vk)
 
