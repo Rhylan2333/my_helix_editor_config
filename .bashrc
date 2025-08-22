@@ -18,9 +18,22 @@ bash_history_fzf() {
     READLINE_POINT=${#READLINE_LINE}
   fi
 }
-
 # 绑定快捷键 Alt+r（即 \er）
 bind -x '"\er": bash_history_fzf'
+
+# 函数：将当前行复制到剪贴板
+copy_cmd_to_clipboard() {
+    if printf '%s' "$READLINE_LINE" | xclip -selection clipboard 2>/dev/null; then
+        echo -e "✅ Copied 👇\n$READLINE_LINE"
+    else
+        echo "❌ Failed to copy to clipboard. "
+    fi
+}
+# 绑定到快捷键 Alt+x（即 \ex）
+bind -x '"\ex": copy_cmd_to_clipboard'
+
+# 可选：绑定到 Ctrl+Shift+C (注意：终端可能拦截此组合)
+# bind -x '"\C-c": copy-line-to-clipboard' # 注意：这会覆盖默认的 SIGINT
 
 # If not running interactively, don't do anything
 case $- in
