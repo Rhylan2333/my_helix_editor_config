@@ -24,6 +24,8 @@ apt 里的 mangohud 版本较低，不能监控 NVIDIA GPU，去 GitHub clone �
 # steam启动黑神话：悟空
 mangohud VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json PROTON_ENABLE_NVAPI=1 LSFG_PROCESS="GameThread" %command%
 ## PROTON_NO_ESYNC=1
+## $ truncate -s 0 ~/.steam/steam/logs/console-linux.txt  # https://github.com/PancakeTAS/lsfg-vk/wiki/How-to-ask-for-help
+## VK_INSTANCE_LAYERS=VK_LAYER_KHRONOS_validation VK_LOADER_DEBUG=all
 
 ```
 ![MangoHud](figures/fig_1.png)
