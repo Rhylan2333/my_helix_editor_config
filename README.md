@@ -28,6 +28,9 @@ mangohud VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json PROTON_ENABLE_
 ## VK_INSTANCE_LAYERS=VK_LAYER_KHRONOS_validation VK_LOADER_DEBUG=all
 
 ```
+
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=115083346776608&bvid=BV1rfeEzsEwW&cid=31913477786&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 ![MangoHud](figures/fig_1.png)
 ![b1 setting](figures/fig_1b.png)
 
