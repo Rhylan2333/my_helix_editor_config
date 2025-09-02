@@ -29,7 +29,7 @@ mangohud VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json PROTON_ENABLE_
 
 ```
 
-<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=115083346776608&bvid=BV1rfeEzsEwW&cid=31913477786&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+【【用Linux玩黑神话：悟空】演示华硕天选4畅玩黑猴！】 https://www.bilibili.com/video/BV1rfeEzsEwW/?share_source=copy_web&vd_source=19217e47f7df9bfa5b5735a12f378008
 
 ![MangoHud](figures/fig_1.png)
 ![b1 setting](figures/fig_1b.png)
