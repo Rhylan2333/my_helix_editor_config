@@ -2,6 +2,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# export http_proxy="http://127.0.0.1:7890"
+# export https_proxy="http://127.0.0.1:7080"
+export https_proxy=http://127.0.0.1:7897
+export http_proxy=http://127.0.0.1:7897
+export all_proxy=socks5://127.0.0.1:7897
+
 # 自定义 fzf 历史搜索函数
 bash_history_fzf() {
   local selected
@@ -40,6 +46,20 @@ case $- in
     *i*) ;;
       *) return;;
 esac
+
+# 对于Zellij，启用全局历史同步
+# 1. 每个命令执行后，立即将新命令追加到 HISTFILE
+# 2. 同时从 HISTFILE 读取其他会话的新命令，合并到当前会话
+# 定义你想要添加的同步命令
+SYNC_HISTORY_COMMAND="history -a; history -n; "
+
+# 检查当前 PROMPT_COMMAND 是否已经包含 SYNC_HISTORY_COMMAND
+# 如果不包含，则追加
+# if [[ ":$PROMPT_COMMAND:" != *":$SYNC_HISTORY_COMMAND:"* ]]; then
+#     export PROMPT_COMMAND="$SYNC_HISTORY_COMMAND$PROMPT_COMMAND"
+# fi
+# （必须配合）确保 HISTCONTROL 允许新命令覆盖旧的
+# HISTCONTROL=ignoreboth:erasedups
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -109,21 +129,21 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
 alias mel='mamba env list'
 alias ma='mamba activate'
 alias mda='mamba deactivate'
@@ -139,11 +159,9 @@ alias et='eza -hT'
 alias elt='eza -hlT'
 alias bst='bat -S -l tsv'
 alias bs='bat -S'
+alias mp='mkdir -p'
 
 export BAT_THEME="Monokai Extended Origin"
-
-# 历史记录忽略重复的命令
-export HISTCONTROL=ignoreboth:erasedups
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -168,6 +186,7 @@ fi
 
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
+eval "$(mcfly init bash)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -197,3 +216,6 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
+
+# seqkit的自动补全
+source ~/.bash_completion
