@@ -37,3 +37,13 @@ mangohud VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json PROTON_ENABLE_
 #### [lsfg-vk](https://github.com/PancakeTAS/lsfg-vk)
 
 ![lsfg-vk](figures/fig_2.png)
+
+## 输入法
+
+#### 解决输入法不生效
+
+比如WPS、微信等。以fcitx5为例，在启动环境变量中写入以下内容：
+
+```
+XMODIFIERS=@im=fcitx GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx SDL_IM_MODULE=fcitx GLFW_IM_MODULE=ibus
+```
