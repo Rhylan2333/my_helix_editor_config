@@ -164,8 +164,8 @@ alias el='eza -hl'
 alias eal='eza -ahl'
 alias et='eza -hT'
 alias elt='eza -hlT'
-alias bst='bat -S -l tsv'
 alias bs='bat -S'
+alias bst='bat -S -l tsv'
 alias mp='mkdir -p'
 
 export BAT_THEME="Monokai Extended Origin"
