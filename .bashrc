@@ -15,6 +15,10 @@ function y() {
 # export https_proxy="http://127.0.0.1:7080"
 export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
 
+export LANG=zh_CN.UTF-8
+export LANGUAGE=zh_CN:zh
+export LC_ALL=zh_CN.UTF-8
+
 # 自定义 fzf 历史搜索函数
 bash_history_fzf() {
   local selected
