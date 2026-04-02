@@ -1,5 +1,4 @@
-theme = "base16_transparent"
-# theme = "papercolor-dark"
+theme = "everforest_dark"
 
 [editor]
 mouse = true
@@ -7,42 +6,47 @@ line-number = "relative"
 cursorline = true
 cursorcolumn = true
 auto-format = false
+completion-replace = true
 true-color = true
+rulers = [80, 120]
 bufferline = "multiple"
+color-modes = true
+trim-final-newlines = true
+trim-trailing-whitespace = true
+popup-border = "popup"
+end-of-line-diagnostics = "hint"
 
 [editor.statusline]
-left = ["mode", "spinner"]
+left = ["mode", "spinner", "read-only-indicator", "file-modification-indicator"]
 center = ["file-name"]
-right = [
-  "diagnostics",
-  "selections",
-  "position",
-  "file-encoding",
-  "file-line-ending",
-  "file-type",
-]
+# right = ["diagnostics", "selections", "register", "position", "file-encoding"]
 separator = "⸽"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
 
 [editor.lsp]
-display-messages = true
+display-progress-messages = true
+display-inlay-hints = true
 
 [editor.cursor-shape]
-insert = "bar"
 normal = "block"
+insert = "bar"
 select = "underline"
 
+[editor.auto-save]
+focus-lost = true
+after-delay.enable = true
+
 [editor.whitespace]
-# render = "all"
-render = "none"
+render = "all"
 
 [editor.whitespace.characters]
-nbsp = "␣"
-newline = "⏎"
 space = "·"
+nbsp = "⍽"
+nnbsp = "␣"
 tab = "⇥"
+newline = "⏎"
 tabpad = "-"  # Tabs will look like "→···" (depending on tab width)
 
 [editor.indent-guides]
@@ -52,3 +56,6 @@ skip-levels = 1
 
 [editor.soft-wrap]
 enable = true
+
+[editor.inline-diagnostics]
+cursor-line = "warning" # show warnings and errors on the cursorline inline
