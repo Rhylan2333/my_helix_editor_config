@@ -47,4 +47,4 @@ mangohud VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json PROTON_ENABLE_
 ```
 XMODIFIERS=@im=fcitx GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx SDL_IM_MODULE=fcitx GLFW_IM_MODULE=ibus
 ```
-[Input Method Panel - GNOME Shell Extensions](https://extensions.gnome.org/extension/261/kimpanel/?c=172932)可以使输入法面板对其输入框中的光标。
+[Input Method Panel - GNOME Shell Extensions](https://extensions.gnome.org/extension/261/kimpanel/?c=172932)可以使输入法面板对齐输入框中的光标。
