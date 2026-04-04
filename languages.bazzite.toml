@@ -1,13 +1,20 @@
 # Language support configuration: https://github.com/helix-editor/helix/blob/master/languages.toml
 # See the languages documentation: https://docs.helix-editor.com/master/languages.html
 # Air is an R formatter and language server: https://posit-dev.github.io/air/
+# Use homebrew to install air, tombi, uv, ruff, pylsp, ty and mypy
 
 [language-server]
 r = { command = "R", args = ["--no-echo", "-e", "languageserver::run()"] }
+tombi = { command = "tombi", args = ["lsp"] }
+ty = { command = "ty", args = ["server"] }
 
 [language-server.air]
 command = "air"
 args = ["language-server"]
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
 
 [[language]]
 name = "r"
@@ -28,8 +35,36 @@ auto-format = true
 
 [[language]]
 name = "toml"
-auto-format = true
 language-servers = ["tombi"]
+auto-format = true
+
+[[language]]
+name = "python"
+scope = "source.python"
+injection-regex = "py(thon)?"
+file-types = [
+  "py",
+  "pyi",
+  "py3",
+  "pyw",
+  "ptl",
+  "rpy",
+  "cpy",
+  "ipy",
+  "pyt",
+  { glob = ".python_history" },
+  { glob = ".pythonstartup" },
+  { glob = ".pythonrc" },
+  { glob = "*SConstruct" },
+  { glob = "*SConscript" },
+  { glob = "*sconstruct" }
+]
+shebangs = ["python", "uv"]
+roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
+comment-token = "#"
+language-servers = ["ruff", "ty", "pylsp"]
+indent = { tab-width = 4, unit = "    " }
+auto-format = true
 
 [[grammar]]
 name = "r"
@@ -38,3 +73,7 @@ source = { git = "https://github.com/r-lib/tree-sitter-r", rev = "0e6ef7741712c0
 [[grammar]]
 name = "toml"
 source = { git = "https://github.com/ikatyang/tree-sitter-toml", rev = "8bd2056818b21860e3d756b5a58c4f6e05fb744e" }
+
+[[grammar]]
+name = "python"
+source = { git = "https://github.com/tree-sitter/tree-sitter-python", rev = "26855eabccb19c6abf499fbc5b8dc7cc9ab8bc64" }
