@@ -1,4 +1,5 @@
-theme = "everforest_dark"
+theme = "base16_default"
+# theme = "everforest_dark"
 
 [editor]
 mouse = true
